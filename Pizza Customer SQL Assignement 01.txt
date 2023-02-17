@@ -1,0 +1,6 @@
+SELECT customer_name,
+case
+WHEN status = 'DELIEVERED' THEN 'COMPLETED'
+WHEN status = 'CREATED' and status!= 'DELIVERED' THEN 'AWAITING SUBMISSION'
+WHEN status = 'SUBMITTED' AND status!='DELIEVRED' THEN 'AWAITING PROGRESS'
+ELSE 'IN PROGRESS' end as final_status from Customer_order group by customer_name order by customer_name;

@@ -1,0 +1,50 @@
+create database data3;
+use data3;
+create table `donor` (
+    `did` int not null,
+    `name` varchar(30),
+    `gender` varchar(1),
+    `city` varchar(30),
+    `bg` varchar(4),
+    `amount` int
+);
+insert into `donor`
+(`name`,`gender`,`city`,`bg`,`amount`)
+VALUES
+('MARIA','F','Warne,NH','AB+',7),
+('RUBY','F','East Natchitoche, PA','AB+',3),
+('CHARLES','M','East Natchitoche, PA','A-',6),
+('DOROTHY','F','East Natchitoche, PA','AB+',9),
+('MICHAEL','M','Warne,NH','A+',1);
+select * from donor;
+
+use data3;
+create table `acceptor` (
+    `did` int,
+    `name` varchar(30),
+    `gender` varchar(1),
+    `city` varchar(30),
+    `bg` varchar(4),
+    `amount` int
+);
+
+insert into `acceptor`
+(`name`,`gender`,`city`,`bg`,`amount`)
+VALUES
+('LINDA','F','Warne,NH','A+',9),
+('CHARLES','M','Warne,NH','AB+',8),
+('RICHARD','M','East Natchitoche, PA','AB+',3),
+('LINDA','F','East Natchitoche, PA','A+',1),
+('PATRICIA','F','Warne,NH','A+',5);
+select * from acceptor;
+
+SELECT acceptor.city ,total1/total2 as total_ratio
+FROM
+(
+    SELECT city, SUM(amount) AS total1 FROM donor group by city  
+    )as donor
+join(
+    SELECT city, SUM(amount) AS total2 FROM acceptor group by city
+)as acceptor
+on donor.city=acceptor.city
+order by acceptor.city;
